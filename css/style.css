@@ -1,0 +1,603 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+
+/* --- SHADCN LIGHT THEME TOKENS --- */
+:root {
+  /* shadcn/ui Colors */
+  --background: #FAFAFA;
+  --card: #FFFFFF;
+  --card-foreground: #09090B;
+  --popover: #FFFFFF;
+  --popover-foreground: #09090B;
+  --primary: #18181B;
+  --primary-foreground: #F4F4F5;
+  --secondary: #F4F4F5;
+  --secondary-foreground: #18181B;
+  --muted: #F4F4F5;
+  --muted-foreground: #71717A;
+  --accent: #F4F4F5;
+  --accent-foreground: #18181B;
+  --destructive: #09090B;
+  --destructive-foreground: #FAFAFA;
+  --border: #E4E4E7;
+  --input: #E4E4E7;
+  --ring: #18181B;
+  --radius: 0.75rem;
+
+  /* Glyde Brand Accents */
+  --brand-gold: #ECBA41;
+  --brand-gold-hover: #E3B035;
+  --brand-gold-text: #8E6500;
+  --brand-gold-light: rgba(236, 186, 65, 0.12);
+  --brand-gold-glow: rgba(236, 186, 65, 0.2);
+
+  /* Fonts */
+  --font-family-body: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-family-heading: 'Outfit', sans-serif;
+  
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-smooth: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* --- RESET & GLOBAL STYLES --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-family-body);
+  background-color: var(--background);
+  color: var(--card-foreground);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Elegant Light Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+::-webkit-scrollbar-thumb {
+  background: #D4D4D8;
+  border: 2px solid var(--background);
+  border-radius: var(--radius);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--brand-gold);
+}
+
+/* --- DYNAMIC AMBIENT GLOW --- */
+body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: 1400px;
+  height: 400px;
+  background: radial-gradient(circle at 50% 0px, rgba(236, 186, 65, 0.08) 0%, rgba(236, 186, 65, 0) 65%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* --- HEADER SYSTEM (Shadcn layout + Brand Gold Bg) --- */
+.app-header {
+  background-color: var(--brand-gold);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.05);
+  transition: var(--transition-smooth);
+}
+
+.header-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+  color: var(--primary-foreground);
+  transition: var(--transition-fast);
+}
+
+.brand-wrapper:hover {
+  transform: translateY(-0.5px);
+  filter: brightness(0.95);
+}
+
+.brand-logo {
+  height: 38px;
+  width: 38px;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  background-color: #18181B; /* Dark wrapper for high logo contrast */
+  padding: 2px;
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
+}
+
+.brand-name {
+  font-family: var(--font-family-heading);
+  font-size: 1.5rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  text-transform: uppercase;
+  color: #18181B;
+}
+
+.nav-menu {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  list-style: none;
+}
+
+.nav-link {
+  color: #18181B;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.95rem;
+  position: relative;
+  padding: 0.4rem 0.2rem;
+  transition: var(--transition-fast);
+  opacity: 0.8;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #18181B;
+  transition: var(--transition-fast);
+  border-radius: 1px;
+}
+
+.nav-link:hover {
+  opacity: 1;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.nav-link.active {
+  opacity: 1;
+  font-weight: 700;
+}
+
+.nav-link.active::after {
+  width: 100%;
+}
+
+/* --- FOOTER SYSTEM (Clean Minimalist Shadcn Style) --- */
+.app-footer {
+  background-color: var(--card);
+  border-top: 1px solid var(--border);
+  padding: 2rem 1.5rem;
+  margin-top: auto;
+  z-index: 1;
+}
+
+.footer-container {
+  max-width: 1100px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.footer-logo {
+  height: 32px;
+  width: 32px;
+  opacity: 0.35;
+  filter: grayscale(1);
+  transition: var(--transition-fast);
+}
+
+.footer-logo:hover {
+  opacity: 0.8;
+  filter: none;
+}
+
+.footer-copyright {
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  font-weight: 400;
+}
+
+/* --- MAIN CONTAINER --- */
+.main-content {
+  flex: 1;
+  max-width: 850px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  z-index: 1;
+}
+
+/* --- GATEWAY PORTAL PAGE (index.html) --- */
+.portal-container {
+  max-width: 950px;
+  text-align: center;
+  padding: 4rem 1.5rem;
+}
+
+.portal-hero {
+  margin-bottom: 3.5rem;
+  animation: fadeInDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.portal-badge {
+  display: inline-block;
+  background: var(--brand-gold-light);
+  border: 1px solid rgba(236, 186, 65, 0.3);
+  color: var(--brand-gold-text);
+  padding: 0.3rem 1rem;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 1.2rem;
+}
+
+.portal-title {
+  font-family: var(--font-family-heading);
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+  line-height: 1.15;
+  margin-bottom: 0.75rem;
+  color: var(--card-foreground);
+}
+
+.portal-subtitle {
+  color: var(--muted-foreground);
+  font-size: 1.1rem;
+  max-width: 580px;
+  margin: 0 auto;
+  font-weight: 400;
+}
+
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+  animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.portal-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+  text-decoration: none;
+  color: var(--card-foreground);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: var(--transition-smooth);
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02), 0 1px 2px -1px rgba(0, 0, 0, 0.02);
+  position: relative;
+}
+
+.portal-card-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 0.5rem;
+  background: var(--brand-gold-light);
+  border: 1px solid rgba(236, 186, 65, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  transition: var(--transition-fast);
+}
+
+.portal-card-icon svg {
+  width: 26px;
+  height: 26px;
+  fill: var(--brand-gold-text);
+  transition: var(--transition-fast);
+}
+
+.portal-card-title {
+  font-family: var(--font-family-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+  color: #18181B;
+}
+
+.portal-card-desc {
+  color: var(--muted-foreground);
+  font-size: 0.9rem;
+  font-weight: 400;
+  margin-bottom: 1.8rem;
+  flex-grow: 1;
+  line-height: 1.5;
+}
+
+.portal-card-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  color: #18181B;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: var(--transition-fast);
+  border-bottom: 1.5px solid transparent;
+  padding-bottom: 2px;
+}
+
+.portal-card-btn svg {
+  width: 16px;
+  height: 16px;
+  fill: #18181B;
+  transition: var(--transition-fast);
+}
+
+/* Card Hover States (Sleek Shadcn/ui Hover Interactions) */
+.portal-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(236, 186, 65, 0.5);
+  box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.08), 0 0 15px var(--brand-gold-glow);
+}
+
+.portal-card:hover .portal-card-icon {
+  background: var(--brand-gold);
+  border-color: var(--brand-gold);
+  box-shadow: 0 4px 10px rgba(236, 186, 65, 0.25);
+}
+
+.portal-card:hover .portal-card-icon svg {
+  fill: #18181B;
+}
+
+.portal-card:hover .portal-card-btn {
+  color: var(--brand-gold-text);
+  border-color: var(--brand-gold);
+}
+
+.portal-card:hover .portal-card-btn svg {
+  fill: var(--brand-gold-text);
+  transform: translateX(3px);
+}
+
+/* --- DOCUMENT LAYOUT (shadcn/ui Content Card Structures) --- */
+.doc-header-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.02);
+  animation: fadeIn 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.doc-tag {
+  display: inline-block;
+  background: var(--brand-gold-light);
+  border: 1px solid rgba(236, 186, 65, 0.25);
+  color: var(--brand-gold-text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  padding: 0.25rem 0.75rem;
+  border-radius: 50px;
+  margin-bottom: 1rem;
+}
+
+.doc-title {
+  font-family: var(--font-family-heading);
+  font-size: 2.25rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.75rem;
+  line-height: 1.15;
+  color: #18181B;
+}
+
+.doc-meta {
+  color: var(--muted-foreground);
+  font-size: 0.85rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+}
+
+.doc-meta svg {
+  width: 14px;
+  height: 14px;
+  fill: var(--muted-foreground);
+}
+
+.doc-intro {
+  color: var(--card-foreground);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-weight: 400;
+  border-left: 2px solid var(--brand-gold);
+  padding-left: 1rem;
+}
+
+/* DOCUMENT CONTENT SECTIONS (Crisp clean cards) */
+.doc-sections-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) 0.1s both;
+}
+
+.doc-section-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 2rem;
+  transition: var(--transition-fast);
+  box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.01);
+}
+
+.doc-section-card:hover {
+  border-color: #D4D4D8;
+}
+
+.doc-section-title {
+  font-family: var(--font-family-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #18181B;
+  margin-bottom: 0.75rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.doc-section-title::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  background: var(--brand-gold);
+  border-radius: 50%;
+}
+
+.doc-section-text {
+  color: #3F3F46; /* zinc-700 for high text legibility */
+  font-size: 0.95rem;
+  line-height: 1.7;
+  font-weight: 400;
+}
+
+/* Bullet list stylings (especially for Privacy Page) */
+.doc-list {
+  list-style: none;
+  margin-top: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.doc-list-item {
+  position: relative;
+  padding-left: 1.5rem;
+  color: #3F3F46;
+  font-size: 0.95rem;
+  font-weight: 400;
+  line-height: 1.6;
+}
+
+.doc-list-item::before {
+  content: "•";
+  position: absolute;
+  left: 0.3rem;
+  top: 0;
+  color: var(--brand-gold-text);
+  font-weight: bold;
+  font-size: 1.1rem;
+}
+
+/* --- KEYFRAME ANIMATIONS --- */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* --- RESPONSIVE ADJUSTMENTS --- */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+  }
+  
+  .nav-menu {
+    width: 100%;
+    justify-content: center;
+    gap: 1.2rem;
+  }
+
+  .nav-link {
+    font-size: 0.9rem;
+  }
+  
+  .portal-title {
+    font-size: 2.2rem;
+  }
+  
+  .portal-subtitle {
+    font-size: 0.95rem;
+  }
+
+  .doc-header-card {
+    padding: 1.75rem;
+  }
+
+  .doc-title {
+    font-size: 1.8rem;
+  }
+
+  .doc-section-card {
+    padding: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .portal-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .doc-meta {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.2rem;
+  }
+}
